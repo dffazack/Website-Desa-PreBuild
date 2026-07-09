@@ -1,1 +1,0 @@
-import"./hoisted.4UkuNkui.js";const a=document.getElementById("form-pengaduan");a&&a.addEventListener("submit",e=>{e.preventDefault(),alert("Terima kasih. Laporan pengaduan/aspirasi Anda telah berhasil dikirim dan akan segera diproses oleh sekretariat Desa Sukasari."),a.reset()});
