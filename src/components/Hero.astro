@@ -1,0 +1,85 @@
+---
+import heroBg from '../assets/images/hero_bg.png';
+---
+<div class="relative min-h-[500px] md:min-h-[600px] bg-navy-dark text-white overflow-hidden flex items-center">
+  <!-- Background Image with Overlay (Vite Asset Pipeline Fingerprinted) -->
+  <div 
+    class="absolute inset-0 bg-cover bg-center z-0 scale-105 transition-transform duration-[10s] ease-out hover:scale-100" 
+    style={`background-image: url('${heroBg.src}');`}
+    role="img"
+    aria-label="Pemandangan sawah terasering hijau pedesaan Desa Sukasari"
+  ></div>
+  <div class="absolute inset-0 bg-gradient-to-r from-navy/95 via-navy/85 to-transparent z-10"></div>
+  <div class="absolute inset-0 bg-navy/40 z-10"></div>
+
+  <!-- Hero Content Container -->
+  <div class="relative max-w-7xl mx-auto px-4 py-20 z-20 w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+    
+    <!-- Left Area: Welcome Texts -->
+    <div class="lg:col-span-8 space-y-6 scroll-reveal active">
+      <div class="flex items-center gap-3">
+        <span class="w-10 h-0.5 bg-terracotta inline-block" aria-hidden="true"></span>
+        <span class="text-xs md:text-sm uppercase tracking-widest text-terracotta font-bold font-sans">Pemerintah Desa Ngenep</span>
+      </div>
+      
+      <h2 class="text-4xl sm:text-5xl md:text-6xl font-black font-serif leading-tight">
+        Selamat Datang di <br />
+        <span class="text-cream italic font-light font-serif">Desa Ngenep</span>
+      </h2>
+      
+      <p class="text-base md:text-lg text-slate-200 font-sans max-w-2xl leading-relaxed">
+        Melayani masyarakat dengan tulus, transparan, dan penuh tanggung jawab demi kesejahteraan warga Desa Ngenep.
+      </p>
+      
+      <div class="flex flex-col sm:flex-row gap-4 pt-4 font-sans">
+        <a 
+          href="/profil" 
+          class="bg-terracotta hover:bg-terracotta-dark text-white font-bold px-8 py-3.5 rounded shadow-lg hover:shadow-terracotta/20 flex items-center justify-center gap-2 transition-all duration-300 hover:-translate-y-0.5 group text-sm uppercase tracking-wider"
+        >
+          Profil Desa
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4.5 w-4.5 text-white transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+          </svg>
+        </a>
+        <a 
+          href="/transparansi" 
+          class="border-2 border-white hover:bg-white hover:text-navy text-white font-bold px-8 py-3 rounded flex items-center justify-center transition-all duration-300 hover:-translate-y-0.5 text-sm uppercase tracking-wider"
+        >
+          Transparansi Dana
+        </a>
+      </div>
+    </div>
+
+    <!-- Right Area: Floating Stats Grid -->
+    <div class="lg:col-span-4 lg:self-end lg:pb-0 pt-8 lg:pt-0">
+      <div class="bg-navy/75 backdrop-blur border border-white/10 rounded p-6 shadow-2xl grid grid-cols-2 gap-6 scroll-reveal active">
+        
+        <div class="border-l-4 border-terracotta pl-3.5">
+          <span class="block text-2xl sm:text-3xl font-bold font-serif tracking-tight text-white">13.829</span>
+          <span class="block text-[10px] font-bold text-terracotta uppercase tracking-wider">Jiwa</span>
+          <span class="block text-xs text-slate-300 font-sans">Penduduk</span>
+        </div>
+
+        <div class="border-l-4 border-terracotta pl-3.5">
+          <span class="block text-2xl sm:text-3xl font-bold font-serif tracking-tight text-white">6.214</span>
+          <span class="block text-[10px] font-bold text-terracotta uppercase tracking-wider">KK</span>
+          <span class="block text-xs text-slate-300 font-sans">Kepala Keluarga</span>
+        </div>
+
+        <div class="border-l-4 border-terracotta pl-3.5">
+          <span class="block text-2xl sm:text-3xl font-bold font-serif tracking-tight text-white">1.391.679</span>
+          <span class="block text-[10px] font-bold text-terracotta uppercase tracking-wider">m³</span>
+          <span class="block text-xs text-slate-300 font-sans">Luas Wilayah</span>
+        </div>
+
+        <div class="border-l-4 border-terracotta pl-3.5">
+          <span class="block text-2xl sm:text-3xl font-bold font-serif tracking-tight text-white">8</span>
+          <span class="block text-[10px] font-bold text-terracotta uppercase tracking-wider">Dusun</span>
+          <span class="block text-xs text-slate-300 font-sans">Jumlah Dusun</span>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>

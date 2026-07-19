@@ -1,0 +1,122 @@
+---
+import Layout from '../layouts/Layout.astro';
+import StrukturOrganisasi from '../components/StrukturOrganisasi.astro';
+import InformasiWilayah from '../components/InformasiWilayah.astro';
+import InformasiLebihLanjut from '../components/InformasiLebihLanjut.astro';
+import VisiMisi from '../components/VisiMisi.astro';
+import IklanLokal from '../components/IklanLokal.astro';
+---
+
+<Layout title="Profil Desa" description="Pelajari profil lengkap Desa Ngenep: struktur organisasi kepengurusan perangkat desa, data geografis wilayah, sejarah singkat, serta visi dan misi pembangunan desa.">
+  
+  <section class="bg-cream pt-10 pb-4">
+    <div class="max-w-7xl mx-auto px-4">
+      
+      <!-- Page Title -->
+      <div class="flex items-center gap-3 border-l-4 border-terracotta pl-4 mb-8">
+        <h2 class="text-3xl md:text-4xl font-black font-serif text-slate-800 tracking-tight">Profil Desa Ngenep</h2>
+      </div>
+
+      <!-- Tab Navigation Buttons -->
+      <div class="border-b border-slate-200 flex flex-wrap gap-2 md:gap-4 font-sans text-xs md:text-sm font-bold tracking-wider text-slate-500 uppercase select-none">
+        <button 
+          id="tab-btn-organisasi"
+          class="tab-btn px-4 py-3 border-b-2 border-terracotta text-terracotta transition-all duration-200 outline-none"
+        >
+          Struktur Organisasi
+        </button>
+        <button 
+          id="tab-btn-wilayah"
+          class="tab-btn px-4 py-3 border-b-2 border-transparent hover:text-navy hover:border-slate-300 transition-all duration-200 outline-none"
+        >
+          Informasi Wilayah
+        </button>
+        <button 
+          id="tab-btn-sejarah"
+          class="tab-btn px-4 py-3 border-b-2 border-transparent hover:text-navy hover:border-slate-300 transition-all duration-200 outline-none"
+        >
+          Sejarah & Budaya
+        </button>
+        <button 
+          id="tab-btn-visimisi"
+          class="tab-btn px-4 py-3 border-b-2 border-transparent hover:text-navy hover:border-slate-300 transition-all duration-200 outline-none"
+        >
+          Visi & Misi
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Dynamic Content Container -->
+  <section class="bg-cream py-10 min-h-[400px]">
+    <div class="max-w-7xl mx-auto px-4">
+      
+      <!-- Tab 1: Struktur Organisasi Content -->
+      <div id="tab-content-organisasi" class="tab-content block">
+        <StrukturOrganisasi />
+      </div>
+
+      <!-- Tab 2: Informasi Wilayah Content -->
+      <div id="tab-content-wilayah" class="tab-content hidden">
+        <InformasiWilayah />
+      </div>
+
+      <!-- Tab 3: Sejarah & Budaya Content -->
+      <div id="tab-content-sejarah" class="tab-content hidden">
+        <InformasiLebihLanjut />
+      </div>
+
+      <!-- Tab 4: Visi & Misi Content -->
+      <div id="tab-content-visimisi" class="tab-content hidden">
+        <VisiMisi />
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Local Ad Banner at the bottom of the page (to match design visuals) -->
+  <IklanLokal />
+
+</Layout>
+
+<script>
+  // Tab Switching Logic
+  const tabs = [
+    { btn: 'tab-btn-organisasi', content: 'tab-content-organisasi' },
+    { btn: 'tab-btn-wilayah', content: 'tab-content-wilayah' },
+    { btn: 'tab-btn-sejarah', content: 'tab-content-sejarah' },
+    { btn: 'tab-btn-visimisi', content: 'tab-content-visimisi' }
+  ];
+
+  tabs.forEach(tab => {
+    const btnEl = document.getElementById(tab.btn);
+    const contentEl = document.getElementById(tab.content);
+
+    if (btnEl && contentEl) {
+      btnEl.addEventListener('click', () => {
+        // Deactivate all tabs
+        tabs.forEach(t => {
+          const b = document.getElementById(t.btn);
+          const c = document.getElementById(t.content);
+          
+          if (b && c) {
+            b.classList.remove('border-terracotta', 'text-terracotta');
+            b.classList.add('border-transparent');
+            c.classList.remove('block');
+            c.classList.add('hidden');
+          }
+        });
+
+        // Activate clicked tab
+        btnEl.classList.remove('border-transparent');
+        btnEl.classList.add('border-terracotta', 'text-terracotta');
+        contentEl.classList.remove('hidden');
+        contentEl.classList.add('block');
+        
+        // Re-trigger scroll observer triggers if any inside content
+        window.dispatchEvent(new Event('scroll'));
+      });
+    }
+  });
+</script>

@@ -1,0 +1,128 @@
+---
+import { 
+  apbdesSummary, 
+  pendapatanKomposisi, 
+  alokasiBelanja, 
+  rincianAnggaran 
+} from '../data/documents';
+---
+<div class="space-y-12">
+  <!-- Title Section -->
+  <div class="scroll-reveal active">
+    <h3 class="text-2xl font-black font-serif text-slate-800 tracking-tight">Transparansi Dana Desa</h3>
+    <span class="w-16 h-1 bg-terracotta inline-block mt-3" aria-hidden="true"></span>
+  </div>
+
+  <!-- Summary Cards Grid -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 scroll-reveal active">
+    {apbdesSummary.map(summary => (
+      <div class={`bg-white border border-slate-200 border-l-4 ${summary.color} rounded p-6 shadow-sm`}>
+        <span class="block text-xs text-slate-400 font-bold uppercase tracking-wider">{summary.title}</span>
+        <h4 class="text-2xl md:text-3xl font-black font-serif text-slate-800 tracking-tight mt-1.5">{summary.value}</h4>
+        <span class="block text-xs text-slate-500 mt-2 font-medium font-sans">{summary.subtitle}</span>
+        {summary.progress && (
+          <div class="w-full bg-slate-100 h-2.5 rounded-full overflow-hidden mt-3.5" role="progressbar" aria-valuenow={68.4} aria-valuemin={0} aria-valuemax={100}>
+            <div class={`bg-emerald-600 h-full rounded-full ${summary.progress}`}></div>
+          </div>
+        )}
+      </div>
+    ))}
+  </div>
+
+  <!-- Charts Layout Container (Flex rows) -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 scroll-reveal active">
+    
+    <!-- Chart 1: Komposisi Pendapatan -->
+    <div class="bg-white border border-slate-200/60 rounded p-6 sm:p-8 shadow-sm space-y-6">
+      <div>
+        <h4 class="font-bold text-base text-slate-800 font-serif tracking-wide">Komposisi Pendapatan</h4>
+        <p class="text-xs text-slate-400 mt-0.5 font-sans">Sumber penerimaan dana APBDes 2025</p>
+      </div>
+
+      <!-- Graph representation lists -->
+      <div class="space-y-4">
+        {pendapatanKomposisi.map(item => (
+          <div class="space-y-1.5 font-sans">
+            <div class="flex justify-between text-xs font-bold text-slate-700">
+              <span>{item.label}</span>
+              <span>{item.percentage}% ({item.valStr})</span>
+            </div>
+            <div class="w-full bg-slate-100 h-3 rounded-full overflow-hidden" role="progressbar" aria-valuenow={item.percentage} aria-valuemin={0} aria-valuemax={100}>
+              <div class={`h-full rounded-full ${item.color}`} style={`width: ${item.percentage}%`}></div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Chart 2: Alokasi Belanja -->
+    <div class="bg-white border border-slate-200/60 rounded p-6 sm:p-8 shadow-sm space-y-6">
+      <div>
+        <h4 class="font-bold text-base text-slate-800 font-serif tracking-wide">Alokasi Belanja</h4>
+        <p class="text-xs text-slate-400 mt-0.5 font-sans">Distribusi belanja per bidang APBDes 2025</p>
+      </div>
+
+      <!-- Graph lists -->
+      <div class="space-y-4">
+        {alokasiBelanja.map(item => (
+          <div class="space-y-1.5 font-sans">
+            <div class="flex justify-between text-xs font-bold text-slate-700">
+              <span class="flex items-center gap-2">
+                <span class="inline-block w-2.5 h-2.5 bg-terracotta" aria-hidden="true"></span>
+                {item.label} ({item.code})
+              </span>
+              <span>Rp {item.val}.000.000</span>
+            </div>
+            <div class="w-full bg-slate-100 h-3 rounded-full overflow-hidden">
+              <div class={`bg-terracotta h-full rounded-full ${item.pct}`}></div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Detailed Table -->
+  <div class="space-y-6 scroll-reveal active">
+    <div class="bg-navy text-white px-5 py-4 flex items-center gap-3 rounded-t border-b border-navy-light/20">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-terracotta" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+      </svg>
+      <h3 class="font-bold text-sm tracking-widest uppercase font-sans">Rincian APBDes Tahun Anggaran 2025</h3>
+    </div>
+
+    <!-- Table Container -->
+    <div class="bg-white border border-slate-200/60 rounded-b shadow-sm overflow-x-auto font-sans">
+      <table class="w-full text-left border-collapse text-slate-600 text-xs sm:text-sm min-w-[700px]">
+        <thead>
+          <tr class="bg-slate-50 border-b border-slate-200 text-slate-500 font-bold uppercase tracking-wider text-[10px]">
+            <th class="py-3 px-5 w-24">Bidang</th>
+            <th class="py-3 px-5">Uraian</th>
+            <th class="py-3 px-5 w-40">Pagu Anggaran</th>
+            <th class="py-3 px-5 w-40">Realisasi</th>
+            <th class="py-3 px-5 w-48">Persentase</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-100">
+          {rincianAnggaran.map(row => (
+            <tr class="hover:bg-slate-50/50 transition-colors duration-150 font-medium">
+              <td class="py-4 px-5 text-slate-800 font-bold">{row.bidang}</td>
+              <td class="py-4 px-5 leading-normal">{row.uraian}</td>
+              <td class="py-4 px-5 font-bold text-navy">{row.pagu}</td>
+              <td class="py-4 px-5 font-bold text-slate-700">{row.realisasi}</td>
+              <td class="py-4 px-5">
+                <div class="flex items-center gap-3">
+                  <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden" role="progressbar" aria-valuenow={parseInt(row.persentase)} aria-valuemin={0} aria-valuemax={100}>
+                    <div class={`bg-terracotta h-full rounded-full ${row.progressWidth}`}></div>
+                  </div>
+                  <span class="font-bold text-terracotta flex-shrink-0 w-8 text-right">{row.persentase}</span>
+                </div>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

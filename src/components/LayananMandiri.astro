@@ -1,0 +1,26 @@
+---
+import { layananList } from '../data/services';
+---
+<section class="py-12 bg-cream" aria-label="Layanan Mandiri Cepat">
+  <div class="max-w-7xl mx-auto px-4">
+    <!-- Grid Layanan -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      {layananList.map(layanan => (
+        <a 
+          href="/kontak" 
+          class="bg-white border border-slate-200/60 rounded p-6 flex items-center gap-5 shadow-sm hover:shadow-md hover:border-terracotta/40 transition-all duration-300 group scroll-reveal active hover:-translate-y-0.5"
+        >
+          <!-- Icon container (blue block) -->
+          <div class="bg-navy p-4 rounded flex-shrink-0 group-hover:bg-navy-light transition-colors duration-300 shadow-sm" set:html={layanan.icon}>
+          </div>
+          
+          <!-- Text details -->
+          <div>
+            <h3 class="text-slate-800 font-bold text-base tracking-wide group-hover:text-terracotta transition-colors duration-200">{layanan.title}</h3>
+            <p class="text-xs text-slate-400 mt-1 font-sans font-medium">{layanan.time}</p>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>

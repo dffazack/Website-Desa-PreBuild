@@ -1,0 +1,43 @@
+---
+import Layout from '../layouts/Layout.astro';
+import TransparansiDana from '../components/TransparansiDana.astro';
+import DokumenTransparansi from '../components/DokumenTransparansi.astro';
+import IklanLokal from '../components/IklanLokal.astro';
+---
+
+<Layout title="Transparansi Anggaran" description="Laporan transparansi realisasi anggaran pendapatan dan belanja desa (APBDes) Pemerintah Desa Sukasari tahun anggaran 2025. Akses rincian pagu dan unduhan berkas PDF.">
+  
+  <section class="bg-cream pt-10 pb-4">
+    <div class="max-w-7xl mx-auto px-4">
+      
+      <!-- Page Title -->
+      <div class="flex items-center gap-3 border-l-4 border-terracotta pl-4 mb-8">
+        <h2 class="text-3xl md:text-4xl font-black font-serif text-slate-800 tracking-tight">Transparansi</h2>
+      </div>
+
+      <!-- Sub Navigation Tabs (simulated to match style) -->
+      <div class="border-b border-slate-200 flex gap-4 font-sans text-xs md:text-sm font-bold tracking-wider text-slate-500 uppercase select-none mb-10">
+        <button class="px-4 py-3 border-b-2 border-terracotta text-terracotta outline-none">
+          Anggaran Realisasi
+        </button>
+      </div>
+
+      <!-- Content Components -->
+      <div class="space-y-16">
+        <!-- Visual data graphs and APBDes tables -->
+        <TransparansiDana />
+        
+        <!-- Divider Line -->
+        <div class="border-t border-slate-200/60 my-10"></div>
+        
+        <!-- Public document downloads -->
+        <DokumenTransparansi />
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Local Ad Banner at the bottom of the page (to match design visuals) -->
+  <IklanLokal />
+
+</Layout>

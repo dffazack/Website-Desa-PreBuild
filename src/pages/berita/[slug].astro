@@ -1,0 +1,236 @@
+---
+import { Image } from 'astro:assets';
+import Layout from '../../layouts/Layout.astro';
+import IklanLokal from '../../components/IklanLokal.astro';
+import { newsItems } from '../../data/news';
+import type { NewsItem } from '../../data/types';
+
+// Astro Dynamic Routing config
+export async function getStaticPaths() {
+  return newsItems.map(item => ({
+    params: { slug: item.slug },
+    props: { item }
+  }));
+}
+
+interface Props {
+  item: NewsItem;
+}
+
+const { item } = Astro.props;
+
+// Filter out current news to get recommendations (max 3 items)
+const otherNews = newsItems
+  .filter(n => n.id !== item.id)
+  .slice(0, 3);
+---
+
+<Layout title={item.title} description={item.excerpt}>
+  
+  <!-- Breadcrumbs & Category Bar -->
+  <section class="bg-cream pt-8 pb-4">
+    <div class="max-w-7xl mx-auto px-4">
+      <nav class="flex text-xs font-bold uppercase tracking-wider text-slate-400 font-sans mb-4" aria-label="Breadcrumb">
+        <ol class="inline-flex items-center space-x-1 md:space-x-2">
+          <li class="inline-flex items-center">
+            <a href="/" class="hover:text-terracotta">Beranda</a>
+          </li>
+          <li>
+            <div class="flex items-center">
+              <span class="mx-1.5 md:mx-2 text-slate-300">/</span>
+              <a href="/berita" class="hover:text-terracotta">Berita</a>
+            </div>
+          </li>
+          <li aria-current="page">
+            <div class="flex items-center">
+              <span class="mx-1.5 md:mx-2 text-slate-300">/</span>
+              <span class="text-slate-500 truncate max-w-[200px] md:max-w-xs">{item.title}</span>
+            </div>
+          </li>
+        </ol>
+      </nav>
+    </div>
+  </section>
+
+  <!-- Main Article Section -->
+  <section class="bg-cream pb-16 font-sans">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+        
+        <!-- Left: Article Body (8 cols) -->
+        <article class="lg:col-span-8 bg-white border border-slate-200/60 rounded p-6 sm:p-10 shadow-sm space-y-6">
+          
+          <!-- Category Tag -->
+          <span class="text-xs md:text-sm font-bold uppercase tracking-widest text-terracotta block">
+            {item.category}
+          </span>
+          
+          <!-- Title -->
+          <h1 class="text-3xl sm:text-4xl md:text-5xl font-black font-serif text-slate-800 leading-tight">
+            {item.title}
+          </h1>
+          
+          <!-- Meta Bar (Author, Date) -->
+          <div class="flex items-center gap-4 text-xs font-bold text-slate-400 border-y border-slate-100 py-3.5 select-none">
+            <!-- Author -->
+            <div class="flex items-center gap-2">
+              <div class="bg-slate-100 p-1.5 rounded-full text-slate-500">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+              </div>
+              <span class="text-slate-600">{item.author}</span>
+            </div>
+            <!-- Date -->
+            <div class="flex items-center gap-2">
+              <span class="text-slate-300">|</span>
+              <span>📅 {item.date}</span>
+            </div>
+          </div>
+
+          <!-- Main Image / SVG Banner -->
+          <div class="relative rounded overflow-hidden bg-navy-dark w-full">
+            {item.image === 'svg-sosial' && (
+              <div class="h-80 md:h-[400px] bg-gradient-to-br from-indigo-900 to-navy p-10 flex flex-col justify-between text-white/90">
+                <span class="text-white/40 font-bold uppercase tracking-widest text-4xl select-none">Sosial</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24 self-end text-terracotta-light/60" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+              </div>
+            )}
+            {item.image === 'svg-pertanian' && (
+              <div class="h-80 md:h-[400px] bg-gradient-to-br from-emerald-900 to-navy p-10 flex flex-col justify-between text-white/90">
+                <span class="text-white/40 font-bold uppercase tracking-widest text-4xl select-none">Pertanian</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24 self-end text-terracotta-light/60" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m12.728 12.728l.707-.707M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+            )}
+            {item.image === 'svg-pendidikan' && (
+              <div class="h-80 md:h-[400px] bg-gradient-to-br from-amber-800 to-navy p-10 flex flex-col justify-between text-white/90">
+                <span class="text-white/40 font-bold uppercase tracking-widest text-4xl select-none">Pendidikan</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24 self-end text-terracotta-light/60" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                </svg>
+              </div>
+            )}
+            {typeof item.image !== 'string' && (
+              <Image 
+                src={item.image} 
+                alt={item.title} 
+                class="w-full h-auto max-h-[480px] object-cover"
+              />
+            )}
+          </div>
+          
+          <!-- Image Caption (Concept: FOTO: ...) -->
+          {item.imageCaption && (
+            <p class="text-xs text-slate-400 italic leading-relaxed text-center border-b border-slate-100 pb-4 font-medium" aria-label="Keterangan foto">
+              {item.imageCaption}
+            </p>
+          )}
+
+          <!-- Breaking News ticker (as requested in the concept) -->
+          <div class="bg-navy text-white text-xs py-2 px-4 rounded flex items-center gap-3 select-none">
+            <span class="bg-terracotta text-white font-bold px-2 py-0.5 rounded text-[10px] uppercase flex-shrink-0">BREAKING NEWS</span>
+            <marquee class="w-full" scrollamount="4">Pemerintah Desa Ngenep mengimbau warga menjaga kebersihan lingkungan menyambut musim hujan dan meningkatkan gotong royong.</marquee>
+          </div>
+
+          <!-- Paragraphs Content -->
+          <div class="space-y-5 text-sm sm:text-base text-slate-600 leading-relaxed font-sans pt-2">
+            {item.content.map((paragraph, index) => {
+              // Highlight the first word/phrase as bold representing source prefix (Concept: beritadesa.com-...)
+              if (index === 0) {
+                const parts = paragraph.split(' - ');
+                if (parts.length > 1) {
+                  return (
+                    <p class="text-slate-700 font-medium text-base sm:text-lg leading-relaxed first-letter:text-4xl first-letter:font-black first-letter:text-terracotta first-letter:mr-2 first-letter:float-left">
+                      <strong>{parts[0]}</strong> - {parts.slice(1).join(' - ')}
+                    </p>
+                  );
+                }
+              }
+              return <p>{paragraph}</p>;
+            })}
+          </div>
+
+        </article>
+
+        <!-- Right: Sidebar (4 cols) -->
+        <aside class="lg:col-span-4 space-y-8">
+          
+          <!-- Other news list -->
+          <div class="bg-white border border-slate-200/60 rounded p-6 shadow-sm space-y-5">
+            <h3 class="font-bold text-sm tracking-widest uppercase text-slate-800 border-b border-slate-100 pb-3">
+              Berita Lainnya
+            </h3>
+            
+            <div class="space-y-4 font-sans">
+              {otherNews.map(other => (
+                <a href={`/berita/${other.slug}`} class="flex items-start gap-3 group border-b border-slate-50 pb-3.5 last:border-0 last:pb-0">
+                  <!-- Minified Image -->
+                  <div class="w-16 h-16 bg-navy-dark rounded overflow-hidden flex-shrink-0 flex items-center justify-center relative">
+                    {typeof other.image === 'string' ? (
+                      <div class="absolute inset-0 bg-slate-200 flex items-center justify-center text-[10px] font-bold text-slate-400">
+                        {other.category.slice(0,3)}
+                      </div>
+                    ) : (
+                      <Image 
+                        src={other.image} 
+                        alt={other.title} 
+                        class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                      />
+                    )}
+                  </div>
+                  
+                  <div>
+                    <span class="text-[9px] font-bold uppercase text-terracotta tracking-wider">{other.category}</span>
+                    <h4 class="text-xs sm:text-sm font-bold text-slate-700 leading-snug group-hover:text-navy transition-colors duration-200 line-clamp-2 mt-0.5">
+                      {other.title}
+                    </h4>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </div>
+
+          <!-- Service hours -->
+          <div class="bg-white border border-slate-200/60 rounded shadow-sm overflow-hidden">
+            <div class="bg-navy text-white px-5 py-4 flex items-center gap-3">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-terracotta" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <h4 class="font-bold text-sm tracking-widest uppercase font-sans">Jam Pelayanan</h4>
+            </div>
+            <div class="p-5 bg-cream-light/40">
+              <div class="divide-y divide-slate-200/60 text-xs sm:text-sm font-sans">
+                <div class="flex justify-between py-2">
+                  <span class="text-slate-600 font-medium">Senin - Kamis</span>
+                  <span class="text-slate-800 font-bold">07.30 - 15.00 WIB</span>
+                </div>
+                <div class="flex justify-between py-2">
+                  <span class="text-slate-600 font-medium">Jumat</span>
+                  <span class="text-slate-800 font-bold">07.30 - 11.30 WIB</span>
+                </div>
+                <div class="flex justify-between py-2">
+                  <span class="text-slate-600 font-medium">Sabtu</span>
+                  <span class="text-slate-800 font-bold">08.00 - 12.00 WIB</span>
+                </div>
+                <div class="flex justify-between py-2">
+                  <span class="text-slate-600 font-medium">Minggu & Libur</span>
+                  <span class="text-terracotta font-bold uppercase tracking-wider">TUTUP</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </aside>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Local Ad Banner -->
+  <IklanLokal />
+
+</Layout>

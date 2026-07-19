@@ -1,0 +1,168 @@
+---
+import { Image } from 'astro:assets';
+import Layout from '../layouts/Layout.astro';
+import IklanLokal from '../components/IklanLokal.astro';
+
+import umbulanSingosari from '../assets/images/sumber_umbulan_singosari.webp';
+import umbulanKrajan from '../assets/images/umbulan_krajan.png';
+import sumberNyolo from '../assets/images/sumber_nyolo.png';
+import damCokro from '../assets/images/dam_cokro.png';
+
+const wisataList = [
+  {
+    id: 1,
+    name: 'Sumber Umbulan Singosari (Hidden Gem)',
+    image: umbulanSingosari,
+    description: 'Sumber mata air alami tersembunyi yang sangat asri. Airnya jernih kristal hingga ikan-ikan kecil di dalamnya terlihat transparan. Berfungsi vital juga sebagai sistem irigasi persawahan desa.',
+    location: 'Jl. Muriadi No.3, Langlang II, Langlang, Kec. Singosari, Kabupaten Malang (Akses masuk dari Dusun Ngenep Lor).',
+    attractions: 'Kolam alami bernuansa biru kehijauan, dikelilingi pohon rindang dan berudara sejuk khas pegunungan. Kedalaman aman.',
+    facilities: 'Gazebo, warung makan, kamar mandi/bilas, area parkir motor.',
+    activities: 'Berenang, memberi makan ikan, fotografi alam, konservasi, healing.',
+    hours: '07.00 - 16.30 WIB',
+    price: 'Gratis (Hanya bayar parkir Rp3.000)'
+  },
+  {
+    id: 2,
+    name: 'Sumber Umbulan Ngenep Krajan (Situs Purbakala)',
+    image: umbulanKrajan,
+    description: 'Destinasi wisata air alam terintegrasi cagar budaya BPCB Jawa Timur berupa penemuan struktur bata situs purbakala era abad ke-12. Berfungsi ganda sebagai tempat wisata religi warga (terdapat punden dan patung Dewa Siwa).',
+    location: 'Dusun Mojosari, Desa Ngenep, Kec. Karangploso.',
+    attractions: 'Perpaduan wisata alam kolam bening biru kehijauan dan situs sejarah peninggalan Kerajaan Singasari.',
+    facilities: 'Gazebo, kamar mandi/bilas, area parkir motor.',
+    activities: 'Mandi air alam, edukasi sejarah cagar budaya, religi.',
+    hours: 'Setiap Hari (24 Jam untuk ziarah/religi)',
+    price: 'Rp 0 (Gratis)'
+  },
+  {
+    id: 3,
+    name: 'Wisata Alam "Sumber Nyolo"',
+    image: sumberNyolo,
+    description: 'Salah satu sumber mata air terbesar di Kecamatan Karangploso yang dikelola oleh Pokdarwis desa setempat untuk kebutuhan air bersih antar-desa, irigasi, dan wisata alam terpadu.',
+    location: 'Langlang I, Gunungrejo, Kec. Karangploso.',
+    attractions: 'Air murni yang konon memiliki mitos awet muda bagi yang mandi di sana. Memiliki sejarah kuat sebagai tempat bersemedi prajurit Kerajaan Singasari.',
+    facilities: 'Kolam renang anak (< 1 meter) & kolam dewasa, gazebo, mushola, warung makan, area parkir luas, camping ground.',
+    activities: 'Berenang, berkemah, rekreasi keluarga, fotografi.',
+    hours: '07.00/08.00 - 17.00 WIB',
+    price: 'Parkir Motor Rp5.000 | Parkir Mobil Rp10.000',
+    contact: '081216125094 (Pak Sumari - Pokdarwis)'
+  },
+  {
+    id: 4,
+    name: 'DAM Cokroaminoto (Wisata Sumber Air Dam Cokro)',
+    image: damCokro,
+    description: 'Bendungan irigasi penahan Sungai Sumber Umbulan yang secara kreatif ditransformasikan sejak tahun 2023 menjadi destinasi wisata air desa guna mendongkrak ekonomi warga lokal.',
+    location: 'Jl. Cokro Aminoto, Lowoksari, Desa Ngenep.',
+    attractions: 'Aliran air sungai pedesaan yang jernih, tenang, dangkal, dan aman untuk wahana anak-anak. Terdapat ikon spot foto patung lumba-lumba.',
+    facilities: 'Pemandian alami, tempat ganti baju, sewa ban pelampung, mainan anak, gazebo, warung, toilet/mushola, tempat parkir luas.',
+    activities: 'Berenang anak-anak, swafoto di patung lumba-lumba, kuliner tepi sungai.',
+    hours: '06.00 - 18.00 WIB',
+    price: 'Sukarela (Seikhlasnya)',
+    contact: '081231825095 (Pak Yon - Pengelola)'
+  }
+];
+---
+
+<Layout title="Potensi Wisata Desa" description="Jelajahi potensi wisata alam dan sejarah Desa Ngenep, Karangploso: Sumber Umbulan Singosari, Sumber Umbulan Ngenep Krajan, Sumber Nyolo, dan DAM Cokroaminoto.">
+  
+  <section class="bg-cream pt-10 pb-4">
+    <div class="max-w-7xl mx-auto px-4">
+      
+      <!-- Page Title -->
+      <div class="flex items-center gap-3 border-l-4 border-terracotta pl-4 mb-8">
+        <h2 class="text-3xl md:text-4xl font-black font-serif text-slate-800 tracking-tight">Wisata Desa Ngenep</h2>
+      </div>
+
+      <!-- Introduction Banner card -->
+      <div class="bg-white border border-slate-200/60 rounded p-8 text-center shadow-sm space-y-4 max-w-4xl mx-auto mb-12 scroll-reveal active font-sans">
+        <div class="bg-cream-dark p-4 rounded-full w-16 h-16 mx-auto flex items-center justify-center text-slate-500">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 002 2h1.5a2.5 2.5 0 012.5 2.5v.5m-3-10a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+        </div>
+        
+        <h3 class="text-xl font-bold text-slate-800 font-serif">Destinasi Alam & Cagar Budaya</h3>
+        <p class="text-slate-500 text-sm max-w-xl mx-auto leading-relaxed">
+          Temukan keasrian mata air alami tersembunyi, cagar budaya bernilai sejarah Kerajaan Singasari, dan tempat rekreasi keluarga yang dikelola langsung oleh masyarakat Desa Ngenep.
+        </p>
+      </div>
+
+      <!-- Tourism Grid List -->
+      <div class="space-y-12 max-w-6xl mx-auto mb-16">
+        {wisataList.map((wisata, index) => (
+          <div class="bg-white border border-slate-200/60 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 grid grid-cols-1 lg:grid-cols-12 gap-0 scroll-reveal active">
+            
+            <!-- Left Side: Image (lg:col-span-5) -->
+            <div class="lg:col-span-5 h-64 lg:h-auto min-h-[300px] relative overflow-hidden bg-slate-100">
+              <Image 
+                src={wisata.image} 
+                alt={wisata.name} 
+                class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+              />
+            </div>
+            
+            <!-- Right Side: Content Details (lg:col-span-7) -->
+            <div class="lg:col-span-7 p-6 sm:p-8 flex flex-col justify-between font-sans space-y-6">
+              
+              <!-- Title & Description -->
+              <div class="space-y-3">
+                <span class="text-[10px] font-bold text-terracotta uppercase tracking-wider">Potensi Wisata #{index + 1}</span>
+                <h3 class="text-xl sm:text-2xl font-bold font-serif text-slate-800 tracking-tight leading-tight">
+                  {wisata.name}
+                </h3>
+                <p class="text-sm text-slate-500 leading-relaxed font-sans pt-1">
+                  {wisata.description}
+                </p>
+              </div>
+
+              <!-- Details Grid -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 border-t border-slate-100 pt-5 text-xs text-slate-600">
+                <div class="space-y-2">
+                  <div class="flex items-start gap-2">
+                    <span class="text-terracotta font-bold">📍</span>
+                    <p><strong>Lokasi:</strong> {wisata.location}</p>
+                  </div>
+                  <div class="flex items-start gap-2">
+                    <span class="text-terracotta font-bold">✨</span>
+                    <p><strong>Daya Tarik:</strong> {wisata.attractions}</p>
+                  </div>
+                  <div class="flex items-start gap-2">
+                    <span class="text-terracotta font-bold">⛺</span>
+                    <p><strong>Aktivitas:</strong> {wisata.activities}</p>
+                  </div>
+                </div>
+
+                <div class="space-y-2">
+                  <div class="flex items-start gap-2">
+                    <span class="text-terracotta font-bold">🏠</span>
+                    <p><strong>Fasilitas:</strong> {wisata.facilities}</p>
+                  </div>
+                  <div class="flex items-start gap-2">
+                    <span class="text-terracotta font-bold">🕒</span>
+                    <p><strong>Jam Buka:</strong> {wisata.hours}</p>
+                  </div>
+                  <div class="flex items-start gap-2">
+                    <span class="text-terracotta font-bold">💵</span>
+                    <p><strong>HTM:</strong> {wisata.price}</p>
+                  </div>
+                  {wisata.contact && (
+                    <div class="flex items-start gap-2 border-t border-dashed border-slate-100 pt-2 mt-2">
+                      <span class="text-emerald-600 font-bold">📞</span>
+                      <p><strong>Narahubung:</strong> <span class="font-bold text-slate-700">{wisata.contact}</span></p>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        ))}
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Local Ad Banner at the bottom -->
+  <IklanLokal />
+
+</Layout>

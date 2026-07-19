@@ -1,0 +1,54 @@
+---
+import { iklanList } from '../data/ads';
+---
+<section class="py-16 bg-cream border-t border-slate-200/40">
+  <div class="max-w-7xl mx-auto px-4 space-y-10">
+    
+    <!-- Tab Badge Header -->
+    <div class="flex">
+      <div class="border border-slate-300 text-slate-600 font-bold text-xs uppercase px-4 py-2 tracking-widest bg-slate-50 rounded-sm">
+        Iklan Usaha Lokal
+      </div>
+    </div>
+
+    <!-- Grid of Ads -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-6">
+      {iklanList.map(iklan => (
+        <a 
+          href={`/umkm/${iklan.slug}`}
+          class="bg-white border border-slate-200 rounded p-5 flex flex-col justify-between shadow-sm hover:shadow-md transition-all duration-300 scroll-reveal active hover:-translate-y-0.5 min-h-[140px] block text-left"
+        >
+          <div class="space-y-3">
+            <!-- Tag Category -->
+            <span class={`inline-block text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded ${iklan.color}`}>
+              {iklan.category}
+            </span>
+            <!-- Business Name -->
+            <h4 class="font-bold text-sm text-slate-800 tracking-wide font-sans leading-tight">
+              {iklan.name}
+            </h4>
+          </div>
+          
+          <!-- Contact Phone -->
+          <div class="flex items-center gap-1.5 text-xs text-slate-400 mt-4 border-t border-slate-100 pt-3 font-sans">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-slate-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.94.725l.548 2.2a1 1 0 01-.321.988l-1.305.98a10.582 10.582 0 004.872 4.872l.98-1.305a1 1 0 01.988-.321l2.2.548a1 1 0 01.725.94V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+            </svg>
+            <span class="font-medium tracking-wide">{iklan.phone}</span>
+          </div>
+        </a>
+      ))}
+
+    </div>
+
+    <!-- Call to Action Banner -->
+    <div class="border-2 border-dashed border-slate-300 rounded p-6 bg-slate-50/50 text-center scroll-reveal active">
+      <p class="text-sm text-slate-600 font-sans tracking-wide">
+        <span class="font-bold text-slate-800">Pasang Iklan Usaha Anda</span> — Hubungi 
+        <a href="mailto:iklan@desasukasari.go.id" class="text-terracotta hover:underline font-bold">iklan@desasukasari.go.id</a> 
+        atau datang langsung ke Kantor Desa.
+      </p>
+    </div>
+
+  </div>
+</section>

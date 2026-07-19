@@ -1,0 +1,71 @@
+---
+import Layout from '../layouts/Layout.astro';
+import IklanLokal from '../components/IklanLokal.astro';
+import { produkHukum } from '../data/laws';
+---
+
+<Layout title="Produk Hukum" description="Daftar produk hukum resmi Desa Sukasari, Kecamatan Sumberejo. Dapatkan berkas digital Peraturan Desa, Peraturan Kepala Desa, dan Keputusan Kepala Desa.">
+  
+  <section class="bg-cream pt-10 pb-4">
+    <div class="max-w-7xl mx-auto px-4">
+      
+      <!-- Page Title -->
+      <div class="flex items-center gap-3 border-l-4 border-terracotta pl-4 mb-8">
+        <h2 class="text-3xl md:text-4xl font-black font-serif text-slate-800 tracking-tight">Produk Hukum Desa</h2>
+      </div>
+
+      <!-- Introduction Banner card (to match visual designs) -->
+      <div class="bg-white border border-slate-200/60 rounded p-8 text-center shadow-sm space-y-4 max-w-4xl mx-auto mb-12 scroll-reveal active font-sans">
+        <!-- Icon Container -->
+        <div class="bg-cream-dark p-4 rounded-full w-16 h-16 mx-auto flex items-center justify-center text-slate-500">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+          </svg>
+        </div>
+        
+        <h3 class="text-xl font-bold text-slate-800 font-serif">Produk Hukum Desa</h3>
+        <p class="text-slate-500 text-sm max-w-lg mx-auto leading-relaxed">
+          Peraturan Desa, Peraturan Kepala Desa, dan Keputusan Kepala Desa yang berlaku di Desa Sukasari.
+        </p>
+      </div>
+
+      <!-- List of laws -->
+      <div class="space-y-6 max-w-5xl mx-auto mb-10 scroll-reveal active font-sans">
+        {produkHukum.map(hukum => (
+          <div class="bg-white border border-slate-200/60 rounded p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-sm hover:border-slate-300 transition-colors duration-200">
+            
+            <div class="space-y-2">
+              <div class="flex items-center gap-2">
+                <span class="bg-navy text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded">
+                  {hukum.nomor}
+                </span>
+                <span class="text-slate-400 text-xs font-semibold uppercase tracking-wider">
+                  {hukum.kategori}
+                </span>
+              </div>
+              <h4 class="font-bold text-slate-800 text-sm sm:text-base leading-snug tracking-wide">{hukum.judul}</h4>
+              <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">{hukum.info}</p>
+            </div>
+
+            <!-- Download button -->
+            <a 
+              href="#" 
+              class="border border-terracotta text-terracotta hover:bg-terracotta hover:text-white font-bold px-5 py-2 rounded text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all duration-200 hover:shadow-md w-full sm:w-auto flex-shrink-0"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+              </svg>
+              Unduh
+            </a>
+
+          </div>
+        ))}
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Local Ad Banner -->
+  <IklanLokal />
+
+</Layout>

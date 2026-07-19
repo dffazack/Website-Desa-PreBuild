@@ -1,0 +1,518 @@
+---
+import { Image } from 'astro:assets';
+import Layout from '../layouts/Layout.astro';
+import IklanLokal from '../components/IklanLokal.astro';
+import { newsItems, newsCategories } from '../data/news';
+import { announcements } from '../data/announcements';
+
+const posyanduData = [
+  { no: 1, name: 'Tumpangrejo', dates: [5, 2, 2, 1, 4, 2, 1, 3, 2, 1, 2, 1] },
+  { no: 2, name: 'Lowoksari', dates: [6, 3, 3, 2, 5, 3, 2, 4, 3, 5, 3, 2] },
+  { no: 3, name: 'Babaan', dates: [7, 4, 4, 6, 6, 4, 6, 5, 7, 6, 4, 3] },
+  { no: 4, name: 'Kubung', dates: [8, 5, 5, 7, 7, 8, 7, 6, 8, 7, 5, 7] },
+  { no: 5, name: 'Curah Kembang', dates: [9, 9, 9, 8, 11, 9, 8, 10, 9, 8, 9, 8] },
+  { no: 6, name: 'Krajan', dates: [15, 19, 12, 16, 21, 18, 16, 20, 17, 15, 18, 17] },
+  { no: 7, name: 'Mojosari', dates: [12, 11, 10, 9, 13, 10, 13, 11, 10, 12, 12, 10] },
+  { no: 8, name: 'Genitri', dates: [13, 18, 16, 13, 19, 11, 15, 12, 14, 13, 10, 14] },
+  { no: 9, name: 'Tirtasani', dates: [17, 14, 17, 11, 16, 13, 18, 15, 19, 17, 14, 12] },
+  { no: 10, name: 'Bumi Perkasa', dates: [10, 7, 7, 4, 2, 6, 4, 1, 5, 3, 7, 5] },
+  { no: 11, name: 'Karangploso View', dates: [14, 18, 14, 18, 23, 20, 20, 22, 21, 19, 21, 19] }
+];
+
+const pkkData = [
+  { day: 'Senin', frequency: '1 Minggu Sekali' },
+  { day: 'Selasa', frequency: '2 Minggu Sekali' },
+  { day: 'Rabu', frequency: '1 Minggu Sekali' },
+  { day: 'Minggu', frequency: '1 Minggu Sekali' }
+];
+---
+
+<Layout title="Berita & Informasi" description="Kabar terbaru, berita terkini, pengumuman resmi, dan jadwal layanan kesehatan dari Pemerintah Desa Ngenep, Karangploso, Malang.">
+  
+  <section class="bg-cream pt-10 pb-4">
+    <div class="max-w-7xl mx-auto px-4">
+      
+      <!-- Page Title -->
+      <div class="flex items-center gap-3 border-l-4 border-terracotta pl-4 mb-8">
+        <h2 class="text-3xl md:text-4xl font-black font-serif text-slate-800 tracking-tight">Berita & Informasi</h2>
+      </div>
+
+      <!-- Tab sub-navigation -->
+      <div class="border-b border-slate-200 flex flex-wrap gap-2 md:gap-4 font-sans text-xs md:text-sm font-bold tracking-wider text-slate-500 uppercase select-none mb-6">
+        <button 
+          id="tab-berita"
+          class="px-4 py-3 border-b-2 border-terracotta text-terracotta outline-none transition-all duration-200"
+        >
+          Berita Desa
+        </button>
+        <button 
+          id="tab-pengumuman"
+          class="px-4 py-3 border-b-2 border-transparent hover:text-navy transition-all duration-200 outline-none"
+        >
+          Pengumuman
+        </button>
+        <button 
+          id="tab-jadwal"
+          class="px-4 py-3 border-b-2 border-transparent hover:text-navy transition-all duration-200 outline-none"
+        >
+          Informasi & Agenda
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Content Container Section -->
+  <section class="bg-cream py-4 min-h-[500px]">
+    <div class="max-w-7xl mx-auto px-4">
+      
+      <!-- CONTAINER 1: BERITA DESA (Tab Content) -->
+      <div id="container-berita" class="block space-y-8 animate-fade-in">
+        
+        <!-- Search & Filters Container (Only for news) -->
+        <div class="bg-white border border-slate-200/60 rounded p-6 shadow-sm space-y-5 font-sans">
+          <!-- Search bar -->
+          <div class="relative w-full flex items-center">
+            <input 
+              type="text" 
+              id="news-search"
+              placeholder="Cari berita..." 
+              class="bg-slate-50 border border-slate-200 px-4 py-2.5 pr-12 text-sm focus:outline-none focus:ring-1 focus:ring-terracotta focus:border-terracotta w-full rounded"
+            />
+            <span class="absolute right-4 text-slate-400">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+            </span>
+          </div>
+
+          <!-- Categories Filters -->
+          <div class="flex flex-wrap gap-2 text-xs font-bold tracking-wider uppercase select-none">
+            {newsCategories.map((cat, idx) => (
+              <button 
+                data-category={cat}
+                class={`filter-btn px-4 py-2.5 rounded transition-all duration-200 border ${
+                  idx === 0 
+                    ? 'bg-navy border-navy text-white' 
+                    : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50 hover:text-navy'
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <!-- News Grid -->
+        <div id="news-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {newsItems.map(item => (
+            <div 
+              data-cat={item.category.toUpperCase()} 
+              class="news-card bg-white border border-slate-200/60 rounded overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between"
+            >
+              <!-- Card Header: Image or styled SVGs -->
+              <div class="h-48 relative overflow-hidden bg-navy-dark flex items-center justify-center">
+                {typeof item.image !== 'string' && (
+                  <Image 
+                    src={item.image} 
+                    alt={item.title} 
+                    class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                  />
+                )}
+              </div>
+
+              <!-- Card Body -->
+              <div class="p-6 flex-grow flex flex-col justify-between space-y-4">
+                <div class="space-y-3">
+                  <!-- Meta information -->
+                  <div class="flex items-center gap-2.5 text-[11px] font-bold tracking-wide uppercase font-sans">
+                    <span class="text-navy">{item.category}</span>
+                    <span class="text-slate-300" aria-hidden="true">•</span>
+                    <span class="text-slate-400">📅 {item.date}</span>
+                  </div>
+                  <!-- Title -->
+                  <h4 class="font-bold text-base font-serif text-slate-800 leading-snug">
+                    {item.title}
+                  </h4>
+                  <!-- Description -->
+                  <p class="text-xs text-slate-500 font-sans leading-relaxed">
+                    {item.excerpt}
+                  </p>
+                </div>
+
+                <!-- Action Link -->
+                <div class="pt-3 border-t border-slate-100 flex font-sans">
+                  <a 
+                    href={`/berita/${item.slug}`} 
+                    class="text-terracotta hover:text-terracotta-dark font-bold text-xs tracking-wider uppercase inline-flex items-center gap-1 transition-colors duration-200"
+                  >
+                    Baca Selengkapnya
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <!-- No Results State -->
+        <div id="no-results" class="hidden bg-white border border-slate-200 rounded p-12 text-center text-slate-400 font-sans shadow-sm">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-slate-300 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <h4 class="text-slate-800 font-bold text-base">Berita tidak ditemukan</h4>
+          <p class="text-slate-500 text-xs mt-1">Coba gunakan kata kunci pencarian atau kategori filter lainnya.</p>
+        </div>
+
+      </div>
+
+      <!-- CONTAINER 2: PENGUMUMAN (Tab Content - Hidden by default) -->
+      <div id="container-pengumuman" class="hidden animate-fade-in">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          {announcements.map(ann => (
+            <div class="bg-white border border-slate-200/60 rounded overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 flex flex-col group">
+              <!-- Poster Preview Container -->
+              <div 
+                class="clickable-poster aspect-[3/4] relative overflow-hidden bg-slate-100 cursor-zoom-in"
+                data-full-src={ann.image.src}
+                data-title={ann.title}
+              >
+                <Image 
+                  src={ann.image} 
+                  alt={ann.title} 
+                  class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                />
+                <!-- Dark Overlay on Hover -->
+                <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                  <div class="bg-white/20 backdrop-blur-md border border-white/20 p-3 rounded-full text-white scale-90 group-hover:scale-100 transition-transform duration-300 shadow">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Card details -->
+              <div class="p-5 flex-grow flex flex-col justify-between space-y-3 font-sans">
+                <h4 class="font-bold text-sm sm:text-base font-serif text-slate-800 leading-snug tracking-wide group-hover:text-terracotta transition-colors duration-200">
+                  {ann.title}
+                </h4>
+                <div class="flex items-center gap-2 text-[10px] font-bold text-slate-400 uppercase pt-3 border-t border-slate-100">
+                  <span>📅 Diterbitkan: {ann.date}</span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- CONTAINER 3: INFORMASI & JADWAL DESA (Tab Content - Hidden by default) -->
+      <div id="container-jadwal" class="hidden space-y-10 animate-fade-in font-sans">
+        
+        <!-- Sektor Pertanian & Hasil Bumi -->
+        <div class="bg-white border border-slate-200/60 rounded-lg p-6 sm:p-8 shadow-sm space-y-4">
+          <div class="border-l-4 border-terracotta pl-4">
+            <h3 class="text-xl font-bold font-serif text-slate-800">Sektor Pertanian & Hasil Bumi</h3>
+            <p class="text-xs text-slate-400 mt-0.5">Komoditas unggulan pertanian Desa Ngenep</p>
+          </div>
+          
+          <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <p class="text-slate-600 text-sm leading-relaxed max-w-3xl">
+              Hasil bumi di Desa Ngenep didominasi oleh <strong>padi dan sayur-mayur</strong>, yang menjadi komoditas utama masyarakat sebagai sumber mata pencaharian utama serta penopang kebutuhan pangan sehari-hari.
+            </p>
+            
+            <a 
+              href="https://drive.google.com/file/d/18PVdj_7x0cQtpungTzimmXmYBIWlJro0/view?usp=ddrivesdk"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="border border-terracotta text-terracotta hover:bg-terracotta hover:text-white font-bold px-6 py-3 rounded text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all duration-200 hover:shadow-md flex-shrink-0"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4.5 w-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+              </svg>
+              Dokumen Hasil Bumi
+            </a>
+          </div>
+        </div>
+
+        <!-- Info Jadwal Kesehatan (Posyandu 2026) -->
+        <div class="bg-white border border-slate-200/60 rounded-lg p-6 sm:p-8 shadow-sm space-y-4">
+          <div class="border-l-4 border-terracotta pl-4">
+            <h3 class="text-xl font-bold font-serif text-slate-800">Info Jadwal Kesehatan (Posyandu 2026)</h3>
+            <p class="text-xs text-slate-400 mt-0.5">Jadwal pelaksanaan bulanan Posyandu di seluruh dusun tahun 2026</p>
+          </div>
+          
+          <p class="text-slate-600 text-sm leading-relaxed">
+            Posyandu adalah wadah pelayanan kesehatan dasar dari, oleh, dan untuk masyarakat guna mempermudah akses kesehatan siklus hidup (ibu hamil, bayi, balita, lansia). Diadakan sebulan sekali di setiap dusun dengan jadwal rutin tahun 2026 berikut (tanggal pelaksanaan per bulan):
+          </p>
+
+          <!-- Responsive Table Container -->
+          <div class="overflow-x-auto border border-slate-200/60 rounded shadow-sm">
+            <table class="w-full text-left border-collapse text-slate-600 text-xs sm:text-sm min-w-[800px]">
+              <thead>
+                <tr class="bg-slate-50 border-b border-slate-200 text-slate-500 font-bold uppercase tracking-wider text-[10px]">
+                  <th class="py-3 px-4 w-12 text-center">No</th>
+                  <th class="py-3 px-4">Nama Posyandu / Dusun</th>
+                  {['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Ags', 'Sep', 'Okt', 'Nov', 'Des'].map((month, index) => (
+                    <th class={`py-3 px-2 text-center ${index % 2 === 0 ? 'bg-slate-100/50' : ''}`}>{month}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100 font-medium">
+                {posyanduData.map((pos) => (
+                  <tr class="hover:bg-slate-50/50 transition-colors duration-150">
+                    <td class="py-3 px-4 text-center text-slate-400 font-bold">{pos.no}</td>
+                    <td class="py-3 px-4 text-slate-800 font-bold">{pos.name}</td>
+                    {pos.dates.map((date, index) => (
+                      <td class={`py-3 px-2 text-center ${index % 2 === 0 ? 'bg-slate-100/20 text-navy' : 'text-slate-700'}`}>
+                        {date}
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Sektor Sosial & PKK -->
+        <div class="bg-white border border-slate-200/60 rounded-lg p-6 sm:p-8 shadow-sm space-y-4">
+          <div class="border-l-4 border-terracotta pl-4">
+            <h3 class="text-xl font-bold font-serif text-slate-800">Sektor Sosial & PKK</h3>
+            <p class="text-xs text-slate-400 mt-0.5">Kegiatan rutinan mingguan Tim Penggerak PKK Desa Ngenep</p>
+          </div>
+          
+          <p class="text-slate-600 text-sm leading-relaxed">
+            PKK Desa Ngenep bergerak aktif memberdayakan keluarga lewat agenda rutin mingguan seperti kegiatan dibak dan tahlilan guna mempererat tali silaturahmi serta gotong royong antarwarga. Berikut jadwal rutinan PKK:
+          </p>
+
+          <!-- Weekly Schedule Blocks -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-2">
+            {pkkData.map((pkk) => (
+              <div class="bg-[#fcf8f2] border border-slate-300/40 rounded p-4 flex flex-col justify-between shadow-sm transform hover:-translate-y-0.5 transition-transform duration-300">
+                <span class="text-xs font-bold text-terracotta uppercase tracking-wider">Hari Kegiatan</span>
+                <h4 class="text-lg font-black text-slate-800 mt-1 font-serif">{pkk.day}</h4>
+                <div class="border-t border-slate-200/60 pt-3 mt-3 flex items-center justify-between text-xs text-slate-500 font-semibold">
+                  <span>Frekuensi:</span>
+                  <span class="bg-navy text-white px-2 py-0.5 rounded text-[10px] uppercase font-bold">{pkk.frequency}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Image Modal Viewer -->
+  <div 
+    id="poster-modal" 
+    class="hidden fixed inset-0 bg-black/90 flex-col items-center justify-center z-50 p-4 select-none animate-fade-in"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Peninjau poster pengumuman penuh"
+  >
+    <!-- Modal Container -->
+    <div class="relative bg-white/5 border border-white/10 rounded-lg p-2 max-w-3xl w-full flex flex-col items-center animate-scale-up">
+      <!-- Close Button -->
+      <button 
+        id="modal-close" 
+        type="button"
+        class="absolute -top-12 right-0 bg-white text-slate-800 hover:bg-slate-100 hover:text-black font-bold p-2.5 rounded-full shadow-lg transition-all duration-200 z-50 w-9 h-9 flex items-center justify-center text-sm"
+        aria-label="Tutup peninjau gambar"
+      >
+        ✕
+      </button>
+      
+      <!-- Image Element -->
+      <img 
+        id="modal-img" 
+        src="" 
+        alt="Poster pengumuman penuh" 
+        class="max-w-full max-h-[75vh] md:max-h-[80vh] object-contain rounded shadow-2xl"
+      />
+      
+      <!-- Title Caption -->
+      <p id="modal-caption" class="text-white text-xs sm:text-sm font-semibold text-center mt-4 px-4 font-sans leading-relaxed"></p>
+    </div>
+  </div>
+
+  <!-- Local Ad Banner -->
+  <IklanLokal />
+
+</Layout>
+
+<script>
+  // Elements Selection with Strict Types
+  const tabBerita = document.getElementById('tab-berita') as HTMLButtonElement | null;
+  const tabPengumuman = document.getElementById('tab-pengumuman') as HTMLButtonElement | null;
+  const tabJadwal = document.getElementById('tab-jadwal') as HTMLButtonElement | null;
+  
+  const containerBerita = document.getElementById('container-berita') as HTMLDivElement | null;
+  const containerPengumuman = document.getElementById('container-pengumuman') as HTMLDivElement | null;
+  const containerJadwal = document.getElementById('container-jadwal') as HTMLDivElement | null;
+
+  const searchInput = document.getElementById('news-search') as HTMLInputElement | null;
+  const filterBtns = document.querySelectorAll('.filter-btn') as NodeListOf<HTMLButtonElement>;
+  const cards = document.querySelectorAll('.news-card') as NodeListOf<HTMLDivElement>;
+  const noResults = document.getElementById('no-results') as HTMLDivElement | null;
+  const grid = document.getElementById('news-grid') as HTMLDivElement | null;
+
+  // Modal Elements
+  const posterModal = document.getElementById('poster-modal') as HTMLDivElement | null;
+  const modalImg = document.getElementById('modal-img') as HTMLImageElement | null;
+  const modalClose = document.getElementById('modal-close') as HTMLButtonElement | null;
+  const modalCaption = document.getElementById('modal-caption') as HTMLParagraphElement | null;
+  const clickablePosters = document.querySelectorAll('.clickable-poster') as NodeListOf<HTMLDivElement>;
+
+  // Tab Switcher Array
+  const tabs = [
+    { btn: tabBerita, container: containerBerita },
+    { btn: tabPengumuman, container: containerPengumuman },
+    { btn: tabJadwal, container: containerJadwal }
+  ];
+
+  tabs.forEach(tab => {
+    if (tab.btn && tab.container) {
+      tab.btn.addEventListener('click', () => {
+        // Deactivate all
+        tabs.forEach(t => {
+          if (t.btn && t.container) {
+            t.btn.classList.remove('border-terracotta', 'text-terracotta');
+            t.btn.classList.add('border-transparent');
+            t.container.classList.remove('block');
+            t.container.classList.add('hidden');
+          }
+        });
+
+        // Activate clicked
+        tab.btn.classList.remove('border-transparent');
+        tab.btn.classList.add('border-terracotta', 'text-terracotta');
+        tab.container.classList.remove('hidden');
+        tab.container.classList.add('block');
+
+        // Re-trigger scroll animations
+        window.dispatchEvent(new Event('scroll'));
+      });
+    }
+  });
+
+  // News Search & Filter logic
+  let activeCategory = 'SEMUA';
+  let searchQuery = '';
+
+  function filterCards(): void {
+    let visibleCount = 0;
+
+    cards.forEach(card => {
+      const cardCat = card.getAttribute('data-cat') || '';
+      const cardTitle = card.querySelector('h4')?.textContent?.toUpperCase() || '';
+      const cardDesc = card.querySelector('p')?.textContent?.toUpperCase() || '';
+
+      const matchCat = activeCategory === 'SEMUA' || cardCat === activeCategory;
+      const matchSearch = searchQuery === '' || cardTitle.includes(searchQuery) || cardDesc.includes(searchQuery);
+
+      if (matchCat && matchSearch) {
+        card.style.display = 'flex';
+        visibleCount++;
+      } else {
+        card.style.display = 'none';
+      }
+    });
+
+    if (visibleCount === 0) {
+      grid?.classList.add('hidden');
+      noResults?.classList.remove('hidden');
+    } else {
+      grid?.classList.remove('hidden');
+      noResults?.classList.add('hidden');
+    }
+  }
+
+  if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+      searchQuery = (e.target as HTMLInputElement).value.toUpperCase().trim();
+      filterCards();
+    });
+  }
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => {
+        b.classList.remove('bg-navy', 'border-navy', 'text-white');
+        b.classList.add('bg-white', 'border-slate-200', 'text-slate-600', 'hover:bg-slate-50', 'hover:text-navy');
+      });
+
+      btn.classList.remove('bg-white', 'border-slate-200', 'text-slate-600', 'hover:bg-slate-50', 'hover:text-navy');
+      btn.classList.add('bg-navy', 'border-navy', 'text-white');
+
+      activeCategory = (btn.getAttribute('data-category') || 'SEMUA').toUpperCase();
+      filterCards();
+    });
+  });
+
+  // Modal Open Logic
+  clickablePosters.forEach(poster => {
+    poster.addEventListener('click', () => {
+      const fullSrc = poster.getAttribute('data-full-src') || '';
+      const title = poster.getAttribute('data-title') || '';
+
+      if (posterModal && modalImg && modalCaption) {
+        modalImg.src = fullSrc;
+        modalCaption.textContent = title;
+        posterModal.classList.remove('hidden');
+        posterModal.classList.add('flex');
+        
+        // Prevent background page scrolling
+        document.body.classList.add('overflow-hidden');
+      }
+    });
+  });
+
+  // Modal Close Logic
+  function closeModal(): void {
+    if (posterModal && modalImg) {
+      posterModal.classList.remove('flex');
+      posterModal.classList.add('hidden');
+      modalImg.src = ''; // Clear source to save memory
+      
+      // Restore scrolling
+      document.body.classList.remove('overflow-hidden');
+    }
+  }
+
+  if (modalClose) {
+    modalClose.addEventListener('click', closeModal);
+  }
+
+  // Close modal when clicking on background overlay
+  if (posterModal) {
+    posterModal.addEventListener('click', (e) => {
+      if (e.target === posterModal) {
+        closeModal();
+      }
+    });
+  }
+
+  // Close on Escape key press
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeModal();
+    }
+  });
+
+  // Pre-fill search from URL query if exists
+  window.addEventListener('DOMContentLoaded', () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const q = urlParams.get('q');
+    if (q && searchInput) {
+      searchInput.value = q;
+      searchQuery = q.toUpperCase().trim();
+      filterCards();
+    }
+  });
+</script>

@@ -1,0 +1,97 @@
+---
+import { Image } from 'astro:assets';
+import { kepalaDesa, sekretarisDesa, kaurList, kasiList, kadusList } from '../data/organization';
+---
+<div class="space-y-12">
+  <!-- Title Section -->
+  <div class="scroll-reveal active">
+    <h3 class="text-2xl font-black font-serif text-slate-800 tracking-tight">Struktur Organisasi Desa</h3>
+    <p class="text-slate-500 text-sm mt-1 font-sans font-medium">Susunan perangkat pemerintah Desa Ngenep periode 2026–2032</p>
+    <span class="w-16 h-1 bg-terracotta inline-block mt-3" aria-hidden="true"></span>
+  </div>
+
+  <!-- Hierarchical Diagram Layout -->
+  <div class="flex flex-col items-center select-none py-4 overflow-x-auto min-w-[750px] md:min-w-0 font-sans scroll-reveal active">
+    
+    <!-- Level 1: Kepala Desa -->
+    <div class="flex flex-col items-center">
+      <div class="bg-navy border-2 border-terracotta shadow-md rounded overflow-hidden w-48 text-center transform hover:scale-[1.02] transition-transform duration-300">
+        <!-- Photo (Astro Assets Optimized) -->
+        <div class="h-36 bg-slate-200 border-b border-navy-light overflow-hidden">
+          <Image 
+            src={kepalaDesa.photo} 
+            alt={`Foto Kepala Desa ${kepalaDesa.name}`} 
+            class="w-full h-full object-cover" 
+          />
+        </div>
+        <!-- Title and Name -->
+        <div class="p-3">
+          <span class="block text-[10px] font-bold text-terracotta uppercase tracking-wider">{kepalaDesa.role}</span>
+          <h4 class="font-bold text-sm text-white mt-1">{kepalaDesa.name}</h4>
+        </div>
+      </div>
+    </div>
+
+    <!-- Vertical Connector Line -->
+    <div class="w-0.5 h-6 bg-slate-300" aria-hidden="true"></div>
+
+    <!-- Level 2: Sekretaris Desa (Carik) -->
+    <div class="flex flex-col items-center">
+      <div class="bg-navy-light border border-terracotta/50 shadow rounded py-3.5 px-4 w-44 text-center transform hover:-translate-y-0.5 transition-transform duration-300">
+        <span class="block text-[10px] font-bold text-terracotta-light uppercase tracking-wider">{sekretarisDesa.role}</span>
+        <h4 class="font-bold text-sm text-white mt-1">{sekretarisDesa.name}</h4>
+      </div>
+    </div>
+
+    <!-- Vertical Line to Staff -->
+    <div class="w-0.5 h-6 bg-slate-300" aria-hidden="true"></div>
+
+    <!-- Level 3: Staff (Kaurs and Kasis in a Grid of 6) -->
+    <div class="relative w-full max-w-5xl flex flex-wrap justify-center items-start gap-4">
+      
+      <!-- Kaurs (3 Staff) -->
+      <div class="flex flex-wrap justify-center gap-4">
+        {kaurList.map(kaur => (
+          <div class="flex flex-col items-center w-36">
+            <div class="bg-[#fcf8f2] border border-slate-300/80 shadow rounded p-3 w-full text-center transform hover:-translate-y-0.5 transition-transform duration-300">
+              <span class="block text-[9px] font-bold text-navy uppercase tracking-wider">{kaur.role}</span>
+              <h4 class="font-bold text-xs text-slate-800 mt-1">{kaur.name}</h4>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- Kasis (3 Staff) -->
+      <div class="flex flex-wrap justify-center gap-4 border-l border-slate-300 pl-4">
+        {kasiList.map(kasi => (
+          <div class="flex flex-col items-center w-36">
+            <div class="bg-[#fcf8f2] border border-slate-300/80 shadow rounded p-3 w-full text-center transform hover:-translate-y-0.5 transition-transform duration-300">
+              <span class="block text-[9px] font-bold text-terracotta uppercase tracking-wider">{kasi.role}</span>
+              <h4 class="font-bold text-xs text-slate-800 mt-1">{kasi.name}</h4>
+            </div>
+          </div>
+        ))}
+      </div>
+
+    </div>
+
+    <!-- Spacer Divider Line -->
+    <div class="w-full flex justify-center py-8" aria-hidden="true">
+      <div class="w-full max-w-4xl border-t border-dashed border-slate-300"></div>
+    </div>
+
+    <!-- Kepala Dusun Row Title -->
+    <h4 class="text-xs uppercase tracking-widest text-slate-400 font-bold mb-4">Kepala Dusun (Kasun)</h4>
+
+    <!-- Level 4: Kepala Dusun (Grid of 7) -->
+    <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-4 w-full max-w-5xl px-4">
+      {kadusList.map(kadus => (
+        <div class="bg-navy border border-navy-light shadow rounded py-3.5 px-2 text-center transform hover:-translate-y-0.5 transition-transform duration-300">
+          <span class="block text-[9px] font-bold text-terracotta-light uppercase tracking-wider">{kadus.role}</span>
+          <h4 class="font-bold text-xs text-white mt-1">{kadus.name}</h4>
+        </div>
+      ))}
+    </div>
+
+  </div>
+</div>
