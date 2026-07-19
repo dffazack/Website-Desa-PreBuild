@@ -4,6 +4,7 @@ import Layout from '../layouts/Layout.astro';
 import IklanLokal from '../components/IklanLokal.astro';
 import { newsItems, newsCategories } from '../data/news';
 import { announcements } from '../data/announcements';
+import hasilBumiImg from '../assets/images/hasil_bumi.png';
 
 const posyanduData = [
   { no: 1, name: 'Tumpangrejo', dates: [5, 2, 2, 1, 4, 2, 1, 3, 2, 1, 2, 1] },
@@ -218,22 +219,32 @@ const pkkData = [
             <p class="text-xs text-slate-400 mt-0.5">Komoditas unggulan pertanian Desa Ngenep</p>
           </div>
           
-          <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
-            <p class="text-slate-600 text-sm leading-relaxed max-w-3xl">
-              Hasil bumi di Desa Ngenep didominasi oleh <strong>padi dan sayur-mayur</strong>, yang menjadi komoditas utama masyarakat sebagai sumber mata pencaharian utama serta penopang kebutuhan pangan sehari-hari.
-            </p>
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+            <div class="md:col-span-9 space-y-4">
+              <p class="text-slate-600 text-sm leading-relaxed">
+                Hasil bumi di Desa Ngenep didominasi oleh <strong>padi dan sayur-mayur</strong>, yang menjadi komoditas utama masyarakat sebagai sumber mata pencaharian utama serta penopang kebutuhan pangan sehari-hari.
+              </p>
+              
+              <a 
+                href="https://drive.google.com/file/d/18PVdj_7x0cQtpungTzimmXmYBIWlJro0/view?usp=ddrivesdk"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="border border-terracotta text-terracotta hover:bg-terracotta hover:text-white font-bold px-6 py-3 rounded text-xs uppercase tracking-wider inline-flex items-center gap-2 transition-all duration-200 hover:shadow-md"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4.5 w-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                </svg>
+                Dokumen Hasil Bumi
+              </a>
+            </div>
             
-            <a 
-              href="https://drive.google.com/file/d/18PVdj_7x0cQtpungTzimmXmYBIWlJro0/view?usp=ddrivesdk"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="border border-terracotta text-terracotta hover:bg-terracotta hover:text-white font-bold px-6 py-3 rounded text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all duration-200 hover:shadow-md flex-shrink-0"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-4.5 w-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-              </svg>
-              Dokumen Hasil Bumi
-            </a>
+            <div class="md:col-span-3 flex justify-center">
+              <Image 
+                src={hasilBumiImg} 
+                alt="Lahan Pertanian Desa Ngenep" 
+                class="w-full max-w-[200px] md:max-w-none h-auto object-cover rounded-none border border-slate-200/80 shadow-sm"
+              />
+            </div>
           </div>
         </div>
 
@@ -300,6 +311,54 @@ const pkkData = [
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+
+        <!-- Sektor Pendidikan -->
+        <div class="bg-white border border-slate-200/60 rounded-lg p-6 sm:p-8 shadow-sm space-y-4">
+          <div class="border-l-4 border-terracotta pl-4">
+            <h3 class="text-xl font-bold font-serif text-slate-800">Sektor Pendidikan</h3>
+            <p class="text-xs text-slate-400 mt-0.5">Daftar instansi pendidikan resmi di Desa Ngenep</p>
+          </div>
+          
+          <p class="text-slate-600 text-sm leading-relaxed">
+            Pendidikan merupakan pilar utama pembangunan sumber daya manusia di Desa Ngenep. Berikut adalah daftar instansi pendidikan resmi tingkat dasar (SD) dan menengah pertama (SMP) yang berada di wilayah desa:
+          </p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+            <!-- Tingkat SD -->
+            <div class="bg-slate-50/50 border border-slate-200/60 rounded p-5 space-y-3">
+              <div class="flex items-center gap-2 border-b border-slate-200/60 pb-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-terracotta" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                </svg>
+                <h4 class="font-bold text-sm text-slate-800 uppercase tracking-wider font-serif">Tingkat SD (Sekolah Dasar)</h4>
+              </div>
+              <ul class="space-y-1.5 text-slate-600 text-sm list-inside list-disc font-medium">
+                <li>SDI Anak Negeri</li>
+                <li>SDI Kharisma</li>
+                <li>SDN 1 Ngenep</li>
+                <li>SDN 2 Ngenep</li>
+                <li>SDN 4 Ngenep</li>
+                <li>SDN 5 Ngenep</li>
+              </ul>
+            </div>
+
+            <!-- Tingkat SMP -->
+            <div class="bg-slate-50/50 border border-slate-200/60 rounded p-5 space-y-3">
+              <div class="flex items-center gap-2 border-b border-slate-200/60 pb-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-terracotta" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+                </svg>
+                <h4 class="font-bold text-sm text-slate-800 uppercase tracking-wider font-serif">Tingkat SMP (Sekolah Menengah Pertama)</h4>
+              </div>
+              <ul class="space-y-1.5 text-slate-600 text-sm list-inside list-disc font-medium">
+                <li>SMPN 3 Karangploso Satu Atap</li>
+                <li>SMPN 5 Karangploso</li>
+                <li>SMP Darun Najah 2 Karangploso</li>
+              </ul>
+            </div>
           </div>
         </div>
 
