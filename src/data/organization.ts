@@ -1,10 +1,6 @@
-import type { OrganisasiItem } from './types';
-import kepalaDesaPhoto from '../assets/images/kepala_desa.png';
-
 export const kepalaDesa: OrganisasiItem = {
   name: 'Sandi Bambang. Sudjono, S.E.',
-  role: 'Pj. Kepala Desa',
-  photo: kepalaDesaPhoto
+  role: 'Pj. Kepala Desa'
 };
 
 export const sekretarisDesa: OrganisasiItem = {
