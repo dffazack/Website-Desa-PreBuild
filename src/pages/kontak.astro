@@ -4,8 +4,8 @@ import IklanLokal from '../components/IklanLokal.astro';
 ---
 
 <Layout title="Kontak & Pengaduan" description="Hubungi Kantor Pemerintah Desa Ngenep atau kirimkan saran, aspirasi, dan laporan pengaduan Anda melalui formulir online resmi kami.">
-  <!-- Load Google reCAPTCHA API -->
-  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  <!-- Load Google reCAPTCHA v3 API -->
+  <script src="https://www.google.com/recaptcha/api.js?render=6LdsmF0tAAAAAAlZajMt8RNzfPCFAAmwoWGcaLn2" async defer></script>
   
   <section class="bg-cream pt-10 pb-4">
     <div class="max-w-7xl mx-auto px-4">
@@ -106,7 +106,10 @@ import IklanLokal from '../components/IklanLokal.astro';
 
             <h4 class="font-bold text-base text-navy font-serif tracking-wide border-b border-slate-100 pb-3 flex items-center justify-between">
               <span>Formulir Aspirasi & Pengaduan Warga</span>
-              <span class="text-[10px] bg-emerald-100 text-emerald-800 font-sans px-2.5 py-0.5 rounded-full font-bold">Dilindungi reCAPTCHA</span>
+              <span class="text-[10px] bg-emerald-100 text-emerald-800 font-sans px-2.5 py-0.5 rounded-full font-bold flex items-center gap-1">
+                <svg class="w-3 h-3 text-emerald-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                Protected by reCAPTCHA v3
+              </span>
             </h4>
 
             <!-- Error / Status Message Alert -->
@@ -189,16 +192,11 @@ import IklanLokal from '../components/IklanLokal.astro';
               ></textarea>
             </div>
 
-            <!-- Google reCAPTCHA Container -->
-            <div class="space-y-1.5 pt-2">
-              <label class="block text-xs font-bold text-slate-500 uppercase tracking-wide">Verifikasi Keamanan</label>
-              <div class="g-recaptcha" data-sitekey="6LdsmF0tAAAAAAlZajMt8RNzfPCFAAmwoWGcaLn2"></div>
-            </div>
-
             <!-- Submit Button -->
             <div class="pt-3">
               <button 
                 type="submit" 
+                id="btn-submit"
                 class="bg-terracotta hover:bg-terracotta-dark text-white font-bold px-6 py-3 rounded text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all duration-300 shadow hover:shadow-md hover:-translate-y-0.5 w-full sm:w-auto"
               >
                 Kirim Laporan Resmi
@@ -223,6 +221,8 @@ import IklanLokal from '../components/IklanLokal.astro';
 <script>
   declare const grecaptcha: any;
 
+  const SITE_KEY_V3 = '6LdsmF0tAAAAAAlZajMt8RNzfPCFAAmwoWGcaLn2';
+
   const form = document.getElementById('form-pengaduan') as HTMLFormElement | null;
   const alertBox = document.getElementById('form-alert') as HTMLDivElement | null;
   const trapInput = document.getElementById('website_trap') as HTMLInputElement | null;
@@ -245,7 +245,6 @@ import IklanLokal from '../components/IklanLokal.astro';
 
       // 1. Honeypot check
       if (trapInput && trapInput.value.trim() !== '') {
-        // Silently drop bot submission
         return;
       }
 
@@ -263,18 +262,7 @@ import IklanLokal from '../components/IklanLokal.astro';
         return;
       }
 
-      // 4. Validate Google reCAPTCHA
-      try {
-        const recaptchaResponse = grecaptcha.getResponse();
-        if (!recaptchaResponse || recaptchaResponse.length === 0) {
-          showAlert('Mohon centang kotak verifikasi reCAPTCHA terlebih dahulu.');
-          return;
-        }
-      } catch (err) {
-        console.warn('reCAPTCHA script not loaded yet', err);
-      }
-
-      // 5. Rate limiting via localStorage (1 submission per 2 minutes)
+      // 4. Rate limiting via localStorage (1 submission per 2 minutes)
       const lastSubmit = localStorage.getItem('last_pengaduan_submit');
       const now = Date.now();
       if (lastSubmit && now - parseInt(lastSubmit, 10) < 120000) {
@@ -282,24 +270,36 @@ import IklanLokal from '../components/IklanLokal.astro';
         return;
       }
 
-      // Record submission timestamp
-      localStorage.setItem('last_pengaduan_submit', now.toString());
+      const processSubmission = (token?: string) => {
+        localStorage.setItem('last_pengaduan_submit', now.toString());
 
-      // Prepare formatted data
-      const nama = (document.getElementById('nama') as HTMLInputElement).value.trim();
-      const jenis = (document.getElementById('jenis-laporan') as HTMLSelectElement).value;
-      const subjek = (document.getElementById('subjek') as HTMLInputElement).value.trim();
-      const pesan = (document.getElementById('pesan') as HTMLTextAreaElement).value.trim();
+        const nama = (document.getElementById('nama') as HTMLInputElement).value.trim();
+        const jenis = (document.getElementById('jenis-laporan') as HTMLSelectElement).value;
+        const subjek = (document.getElementById('subjek') as HTMLInputElement).value.trim();
+        const pesan = (document.getElementById('pesan') as HTMLTextAreaElement).value.trim();
 
-      showAlert('Terima kasih! Laporan Anda telah berhasil terverifikasi. Membuka WhatsApp Sekretariat Desa Ngenep...', false);
+        showAlert('Terima kasih! Laporan Anda telah berhasil terverifikasi. Membuka WhatsApp Sekretariat Desa Ngenep...', false);
 
-      // Reset form & reCAPTCHA
-      setTimeout(() => {
-        const waMessage = `Halo Admin Pemdes Ngenep,%0A%0ASaya ingin menyampaikan *${jenis}*:%0A- *Nama*: ${encodeURIComponent(nama)}%0A- *NIK*: ${encodeURIComponent(nik)}%0A- *Kontak*: ${encodeURIComponent(phone)}%0A- *Subjek*: ${encodeURIComponent(subjek)}%0A- *Isi Pesan*: ${encodeURIComponent(pesan)}`;
-        window.open(`https://wa.me/6285142505492?text=${waMessage}`, '_blank');
-        form.reset();
-        try { grecaptcha.reset(); } catch (e) {}
-      }, 1000);
+        setTimeout(() => {
+          const waMessage = `Halo Admin Pemdes Ngenep,%0A%0ASaya ingin menyampaikan *${jenis}*:%0A- *Nama*: ${encodeURIComponent(nama)}%0A- *NIK*: ${encodeURIComponent(nik)}%0A- *Kontak*: ${encodeURIComponent(phone)}%0A- *Subjek*: ${encodeURIComponent(subjek)}%0A- *Isi Pesan*: ${encodeURIComponent(pesan)}`;
+          window.open(`https://wa.me/6285142505492?text=${waMessage}`, '_blank');
+          form.reset();
+        }, 800);
+      };
+
+      // Execute reCAPTCHA v3
+      if (typeof grecaptcha !== 'undefined') {
+        grecaptcha.ready(() => {
+          grecaptcha.execute(SITE_KEY_V3, { action: 'submit_pengaduan' }).then((token: string) => {
+            processSubmission(token);
+          }).catch((err: any) => {
+            console.warn('reCAPTCHA execution fallback', err);
+            processSubmission();
+          });
+        });
+      } else {
+        processSubmission();
+      }
     });
   }
 </script>
