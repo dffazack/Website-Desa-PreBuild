@@ -63,17 +63,23 @@ export interface PendapatanKomposisiItem {
 export interface AlokasiBelanjaItem {
   code: string;
   label: string;
-  val: number;
+  valStr: string;
   pct: string;
+  pctValue: number;
+}
+
+export interface SubBidangItem {
+  nama: string;
+  nominal: string;
 }
 
 export interface RincianAnggaranItem {
   bidang: string;
   uraian: string;
   pagu: string;
-  realisasi: string;
   persentase: string;
   progressWidth: string;
+  subBidang: SubBidangItem[];
 }
 
 export interface DokumenItem {
@@ -87,6 +93,7 @@ export interface ProdukHukumItem {
   judul: string;
   info: string;
   kategori: string;
+  link?: string;
 }
 
 export interface GaleriItem {

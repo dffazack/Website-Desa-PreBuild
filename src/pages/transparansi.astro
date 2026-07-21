@@ -1,13 +1,12 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import TransparansiDana from '../components/TransparansiDana.astro';
-import DokumenTransparansi from '../components/DokumenTransparansi.astro';
 import IklanLokal from '../components/IklanLokal.astro';
 ---
 
-<Layout title="Transparansi Anggaran" description="Laporan transparansi realisasi anggaran pendapatan dan belanja desa (APBDes) Pemerintah Desa Sukasari tahun anggaran 2025. Akses rincian pagu dan unduhan berkas PDF.">
+<Layout title="Transparansi Anggaran - Desa Ngenep" description="Laporan transparansi Anggaran Pendapatan dan Belanja Desa (APBDes) Pemerintah Desa Ngenep tahun anggaran 2025. Akses rincian pendapatan, belanja, dan pembiayaan.">
   
-  <section class="bg-cream pt-10 pb-4">
+  <section class="bg-cream pt-10 pb-12">
     <div class="max-w-7xl mx-auto px-4">
       
       <!-- Page Title -->
@@ -15,7 +14,7 @@ import IklanLokal from '../components/IklanLokal.astro';
         <h2 class="text-3xl md:text-4xl font-black font-serif text-slate-800 tracking-tight">Transparansi</h2>
       </div>
 
-      <!-- Sub Navigation Tabs (simulated to match style) -->
+      <!-- Sub Navigation Tabs -->
       <div class="border-b border-slate-200 flex gap-4 font-sans text-xs md:text-sm font-bold tracking-wider text-slate-500 uppercase select-none mb-10">
         <button class="px-4 py-3 border-b-2 border-terracotta text-terracotta outline-none">
           Anggaran Realisasi
@@ -23,21 +22,15 @@ import IklanLokal from '../components/IklanLokal.astro';
       </div>
 
       <!-- Content Components -->
-      <div class="space-y-16">
+      <div>
         <!-- Visual data graphs and APBDes tables -->
         <TransparansiDana />
-        
-        <!-- Divider Line -->
-        <div class="border-t border-slate-200/60 my-10"></div>
-        
-        <!-- Public document downloads -->
-        <DokumenTransparansi />
       </div>
 
     </div>
   </section>
 
-  <!-- Local Ad Banner at the bottom of the page (to match design visuals) -->
+  <!-- Local Ad Banner at the bottom of the page -->
   <IklanLokal />
 
 </Layout>
