@@ -5,9 +5,9 @@ import IklanLokal from '../components/IklanLokal.astro';
 import { galeriItems } from '../data/gallery';
 ---
 
-<Layout title="Galeri" description="Dokumentasi foto dan video kegiatan masyarakat dan program pembangunan Pemerintah Desa Sukasari, Kecamatan Sumberejo.">
+<Layout title="Galeri - Desa Ngenep" description="Dokumentasi foto kegiatan masyarakat dan keindahan alam Pemerintah Desa Ngenep.">
   
-  <section class="bg-cream pt-10 pb-4">
+  <section class="bg-cream pt-10 pb-12">
     <div class="max-w-7xl mx-auto px-4">
       
       <!-- Page Title -->
@@ -15,8 +15,8 @@ import { galeriItems } from '../data/gallery';
         <h2 class="text-3xl md:text-4xl font-black font-serif text-slate-800 tracking-tight">Galeri Desa</h2>
       </div>
 
-      <!-- Introduction Banner card (to match visual designs) -->
-      <div class="bg-white border border-slate-200/60 rounded p-8 text-center shadow-sm space-y-4 max-w-4xl mx-auto mb-12 scroll-reveal active font-sans">
+      <!-- Introduction Banner card -->
+      <div class="bg-white border border-slate-200/60 rounded-lg p-8 text-center shadow-sm space-y-4 max-w-4xl mx-auto mb-12 scroll-reveal active font-sans">
         <!-- Icon Container -->
         <div class="bg-cream-dark p-4 rounded-full w-16 h-16 mx-auto flex items-center justify-center text-slate-500">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
@@ -24,34 +24,36 @@ import { galeriItems } from '../data/gallery';
           </svg>
         </div>
         
-        <h3 class="text-xl font-bold text-slate-800 font-serif">Galeri Desa</h3>
+        <h3 class="text-xl font-bold text-slate-800 font-serif">Galeri Desa Ngenep</h3>
         <p class="text-slate-500 text-sm max-w-lg mx-auto leading-relaxed">
-          Dokumentasi foto dan video kegiatan pemerintah dan masyarakat Desa Sukasari.
+          Dokumentasi foto kegiatan pemerintah, masyarakat, dan keindahan alam Desa Ngenep.
         </p>
       </div>
 
       <!-- Gallery Grid -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto mb-10 font-sans">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto mb-10 font-sans">
         {galeriItems.map(item => (
-          <div class="bg-white border border-slate-200/60 rounded overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 group scroll-reveal active hover:-translate-y-0.5">
+          <div class="bg-white border border-slate-200/80 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 group scroll-reveal active hover:-translate-y-1 flex flex-col">
             <!-- Image Area (Astro Assets Optimized) -->
-            <div class="h-56 relative overflow-hidden bg-slate-100">
+            <div class="h-64 relative overflow-hidden bg-slate-100">
               <Image 
                 src={item.image} 
                 alt={item.title} 
                 class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
-              <div class="absolute inset-0 bg-navy/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" aria-hidden="true"></div>
+              <div class="absolute inset-0 bg-navy/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" aria-hidden="true"></div>
             </div>
             
             <!-- Description Details -->
-            <div class="p-5 space-y-2">
-              <span class="text-[10px] font-bold text-terracotta uppercase tracking-wider">
-                {item.kategori}
-              </span>
-              <h4 class="font-bold text-sm text-slate-800 leading-snug tracking-wide group-hover:text-terracotta transition-colors duration-200">
-                {item.title}
-              </h4>
+            <div class="p-5 space-y-2 flex-grow flex flex-col justify-between">
+              <div>
+                <span class="text-[11px] font-bold text-terracotta uppercase tracking-wider block mb-1">
+                  {item.kategori}
+                </span>
+                <h4 class="font-bold text-base text-slate-800 leading-snug tracking-wide group-hover:text-terracotta transition-colors duration-200 font-serif">
+                  {item.title}
+                </h4>
+              </div>
             </div>
           </div>
         ))}
